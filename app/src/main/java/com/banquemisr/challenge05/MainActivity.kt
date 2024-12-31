@@ -4,44 +4,30 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.banquemisr.challenge05.ui.theme.Challenge05Theme
+import androidx.navigation.compose.rememberNavController
+import com.banquemisr.challenge05.ui.navigation.NavGraph
+import com.banquemisr.challenge05.ui.theme.MarvalAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Challenge05Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            MainScreen()
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+private fun MainScreen() {
+    MarvalAppTheme {
+        val navController = rememberNavController()
+        Scaffold {paddingValues ->  NavGraph(modifier = Modifier,navController) }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Challenge05Theme {
-        Greeting("Android")
     }
 }
