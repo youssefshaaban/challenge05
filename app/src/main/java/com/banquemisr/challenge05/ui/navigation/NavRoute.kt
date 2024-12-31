@@ -3,11 +3,11 @@ package com.banquemisr.challenge05.ui.navigation
 
 sealed class NavRoute(val path: String) {
 
-    data object Characters: NavRoute("characters")
+    data object MovieList: NavRoute("movies-list")
 
 
-    data object CharacterDetail: NavRoute("charactersDetail") {
-        val characterId = "characterId"
+    data object MovieDetail: NavRoute("movieDetail") {
+        val movieId = "movieId"
     }
 
 

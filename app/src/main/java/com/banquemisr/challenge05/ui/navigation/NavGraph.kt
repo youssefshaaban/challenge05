@@ -6,13 +6,14 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.banquemisr.challenge05.ui.movie_detail.MovieDetailScreen
 import com.banquemisr.challenge05.ui.movies.MovieListScreen
 
 @Composable
 fun NavGraph(modifier: Modifier=Modifier,navController: NavHostController) {
     NavHost(modifier =modifier,
         navController = navController,
-        startDestination = NavRoute.Characters.path
+        startDestination = NavRoute.MovieList.path
     ) {
         addMovieListScreen(navController, this)
 
@@ -21,20 +22,20 @@ fun NavGraph(modifier: Modifier=Modifier,navController: NavHostController) {
 }
 
 fun addMovieDetailScreen(navController: NavHostController, navGraphBuilder: NavGraphBuilder) {
-    navGraphBuilder.composable(route = NavRoute.CharacterDetail.withArgsFormat(NavRoute.CharacterDetail.characterId)) {navBackStackEntry->
-        val charactersId = navBackStackEntry.arguments?.getString(NavRoute.CharacterDetail.characterId,"")
+    navGraphBuilder.composable(route = NavRoute.MovieDetail.withArgsFormat(NavRoute.MovieDetail.movieId)) { navBackStackEntry->
+        val movieId = navBackStackEntry.arguments?.getString(NavRoute.MovieDetail.movieId,"")
         /* We check if it's not null */
-        charactersId?.let { id->
-
+        movieId?.let { id->
+            MovieDetailScreen(id)
         }
 
     }
 }
 
 fun addMovieListScreen(navController: NavHostController, navGraphBuilder: NavGraphBuilder) {
-    navGraphBuilder.composable(route =NavRoute.Characters.path ) {
+    navGraphBuilder.composable(route =NavRoute.MovieList.path ) {
         MovieListScreen{ id->
-            navController.navigate(NavRoute.CharacterDetail.withArgs(id.toString()))
+            navController.navigate(NavRoute.MovieDetail.withArgs(id.toString()))
         }
     }
 

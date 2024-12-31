@@ -1,8 +1,10 @@
 package com.banquemisr.data.remote
 
+import com.banquemisr.data.model.movie_detail.MovieDetailResponse
 import com.banquemisr.data.model.movie_list.MovieResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.QueryMap
 
 
@@ -23,5 +25,8 @@ interface MovieAPI {
         @QueryMap queryMap: Map<String, String>
     ): Response<MovieResponse>
 
-
+    @GET("3/movie/{movie_id}")
+    suspend fun getMovieDetail(
+        @Path("movie_id") movieId: String
+    ): Response<MovieDetailResponse>
 }

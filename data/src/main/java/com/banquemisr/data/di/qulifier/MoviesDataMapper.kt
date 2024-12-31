@@ -4,4 +4,9 @@ import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class MovieDataMapper
+annotation class MoviesDataMapper
+
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class MoviesDetailMapper

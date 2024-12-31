@@ -1,11 +1,12 @@
 package com.banquemisr.data.repositories
 
-import com.banquemisr.data.di.qulifier.MovieDataMapper
+import com.banquemisr.data.model.movie_detail.MovieDetailResponse
 import com.banquemisr.data.model.movie_list.MovieResponse
 import com.banquemisr.data.remote.MovieAPI
 import com.banquemisr.data.utils.apiCall
 import com.banquemisr.domain.DataMapper
 import com.banquemisr.domain.entity.QueryCharacters
+import com.banquemisr.domain.entity.movie.Movie
 import com.banquemisr.domain.entity.movie.PageData
 import com.banquemisr.domain.repositories.IMoviesRepository
 import com.banquemisr.domain.util.Resource
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 class MovieRepositoryImp @Inject constructor(
     private val movieAPI: MovieAPI,
-    private val dataMapper: DataMapper<MovieResponse, PageData>
+    private val dataMapper: DataMapper<MovieResponse, PageData>,
+    private val movieMapper: DataMapper<MovieDetailResponse, Movie>
 ) : IMoviesRepository {
     override suspend fun getMovieListNowPlaying(queryCharacters: QueryCharacters): Flow<Resource<PageData>> {
         return flow {
@@ -54,6 +56,21 @@ class MovieRepositoryImp @Inject constructor(
             when (result) {
                 is Resource.Success -> {
                     emit(Resource.Success(dataMapper.execute(result.data)))
+                }
+
+                is Resource.Error -> {
+                    emit(Resource.Error(result.error))
+                }
+            }
+        }
+    }
+
+    override suspend fun getMovieDetail(movieId: String): Flow<Resource<Movie>> {
+        return flow {
+            val result = apiCall { movieAPI.getMovieDetail(movieId) }
+            when (result) {
+                is Resource.Success -> {
+                    emit(Resource.Success(movieMapper.execute(result.data)))
                 }
 
                 is Resource.Error -> {

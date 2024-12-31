@@ -38,7 +38,7 @@ import com.banquemisr.domain.entity.movie.Movie
 import kotlinx.collections.immutable.PersistentList
 
 @Composable
-fun MovieListScreen(onClickCharacters: (Int) -> Unit) {
+fun MovieListScreen(onClickMovie: (Int) -> Unit) {
     val viewModel = hiltViewModel<MovieListViewModel>()
 
     // Keep track of the selected tab index
@@ -89,7 +89,7 @@ fun MovieListScreen(onClickCharacters: (Int) -> Unit) {
                         modifier = Modifier.align(Alignment.Center)
                     )
                 } else {
-                    MovieList(movies = movies)
+                    MovieList(movies = movies,onClickMovie)
                 }
             }
         }
@@ -98,12 +98,10 @@ fun MovieListScreen(onClickCharacters: (Int) -> Unit) {
 }
 
 @Composable
-fun MovieList(movies: PersistentList<Movie>) {
+fun MovieList(movies: PersistentList<Movie>, onClickMovie:(Int)->Unit) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
         items(movies) {
-            MovieItem(it) {
-
-            }
+            MovieItem(it,onClickMovie)
         }
     }
 }
