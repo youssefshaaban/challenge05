@@ -26,7 +26,9 @@ fun addMovieDetailScreen(navController: NavHostController, navGraphBuilder: NavG
         val movieId = navBackStackEntry.arguments?.getString(NavRoute.MovieDetail.movieId,"")
         /* We check if it's not null */
         movieId?.let { id->
-            MovieDetailScreen(id)
+            MovieDetailScreen(id){
+                navController.popBackStack()
+            }
         }
 
     }
